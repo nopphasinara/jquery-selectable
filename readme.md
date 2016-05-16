@@ -19,6 +19,14 @@ Features:
 - API to get, set, select all, select none, and disable selection
 - Compact! (About 230 lines)
 
+## Installing
+
+Include the minified version of this plugin in your project or install via NPM:
+
+```
+npm install --save @claviska/jquery-selectable
+```
+
 ## Attaching the plugin
 
 Minimal example that attached the plugin to a group of list items:
