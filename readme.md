@@ -103,7 +103,7 @@ The following API methods are supported:
 
 - `destroy`: returns the control to its pre-initialized state.
 
-- `getElements`: returns a jQuery object containing all elements in the collection. Passing `true` as an argument will only return selected elements.
+- `getElements`: returns a jQuery object containing all elements in the collection. Passing `true` as an argument will return only selected elements. Passing a string or an array will return all elements that have those values.
 
 - `selectAll`: selects all items in the collection.
 

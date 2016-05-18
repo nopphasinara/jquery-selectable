@@ -129,13 +129,27 @@ if(jQuery) (function($) {
     }
 
     // Return HTML elements for all items
-    function getElements(selectedOnly) {
+    function getElements(which) {
         var container = this,
-            options = $(container).data('options.selectable');
+            options = $(container).data('options.selectable'),
+            matching = [];
 
-        return selectedOnly ?
-            $(container).find(options.items + '.' + options.selectedClass).toArray() :
-            $(container).find(options.items).toArray();
+        if( which === true ) {
+            // Return selected
+            return $(container).find(options.items + '.' + options.selectedClass).toArray();
+        } else if( which === undefined || which === null || which === false ) {
+            // Return all
+            return $(container).find(options.items).toArray();
+        } else {
+            // Return matching
+            if( typeof which === 'string' ) which = [which];
+            $(container).find(options.items).each(function() {
+                if( $.inArray(options.getValue.call(this), which) > -1 ) {
+                    matching.push(this);
+                }
+            });
+            return matching;
+        }
     }
 
     // Select all items
