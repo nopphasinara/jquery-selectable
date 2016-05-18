@@ -134,8 +134,8 @@ if(jQuery) (function($) {
             options = $(container).data('options.selectable');
 
         return selectedOnly ?
-            $(container).find(options.items + '.' + options.selectedClass) :
-            $(container).find(options.items);
+            $(container).find(options.items + '.' + options.selectedClass).toArray() :
+            $(container).find(options.items).toArray();
     }
 
     // Select all items
