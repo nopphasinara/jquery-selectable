@@ -65,7 +65,7 @@ if(jQuery) (function($) {
 
         $(container)
         .data('options.selectable', options)
-        .on('click.selectable', options.items, function(event) {
+        .on('click.selectable dblclick.selectable', options.items, function(event) {
             event.preventDefault();
             toggle.call(container, this, event);
         });
@@ -78,7 +78,8 @@ if(jQuery) (function($) {
         .removeData('lastChange.selectable')
         .removeData('lastIndex.selectable')
         .removeData('options.selectable')
-        .off('click.selectable');
+        .off('click.selectable')
+        .off('dblclick.selectable');
     }
 
     // Disable it
@@ -192,11 +193,16 @@ if(jQuery) (function($) {
         if( $(container).data('disabled.selectable') ) return;
 
         // Fire click callback
-        if( options.click ) {
+        if( event.type === 'click' && options.click ) {
             if( options.click.call(container, options.getValue.call(item), item) === false ) {
-                // Stop if false is returned
+                // Don't toggle if false is returned
                 return;
             }
+        }
+
+        // Fire doubleClick callback
+        if( event.type === 'dblclick' && options.doubleClick ) {
+            options.doubleClick.call(container, options.getValue.call(item), item);
         }
 
         // Toggle selection
