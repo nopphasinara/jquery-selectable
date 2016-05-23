@@ -99,6 +99,8 @@ $('.my-list').selectable('method', arg);
 
 The following API methods are supported:
 
+- `change`: Triggers the change event (will only run if a change has actually been made). Useful when you need to trigger a change after working with items directly in the DOM.
+
 - `create` (default): initializes the plugin on the given container.
 
 - `destroy`: returns the control to its pre-initialized state.

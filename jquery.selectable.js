@@ -28,6 +28,9 @@ if(jQuery) (function($) {
 
             // Public API
             switch(method) {
+                case 'change':
+                    return $(this).each(fireChange);
+
                 case 'destroy':
                     return $(this).each(destroy);
 
