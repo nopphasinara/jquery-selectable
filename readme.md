@@ -60,8 +60,8 @@ $('.my-list').selectable({
 
     // Callbacks
     change: function(values, elements) { ... },
-    click: function(value, element) { ... },
-    doubleClick: function(value, element) { ...}
+    click: function(value, element, event) { ... },
+    doubleClick: function(value, element, event) { ...}
 });
 ```
 
@@ -86,7 +86,7 @@ For the `change` callback, two arguments are available. The first is an array of
 For the `click` and `doubleClick` callbacks, two arguments are available. The first is the value of the target item and the second is the target element.
 
 - `change`: runs when the selection changes, including when changes are made programmatically.
-- `click`: runs when an item is clicked. Returning `false` will prevent selection.
+- `click`: runs when an item is clicked. `event.preventDefault()` or `return false` will prevent the selection from being toggled.
 - `doubleClick`: runs when an item is double clicked.
 
 ### Methods

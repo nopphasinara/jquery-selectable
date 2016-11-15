@@ -69,7 +69,10 @@ if(jQuery) (function($) {
         $(container)
         .data('options.selectable', options)
         .on('click.selectable dblclick.selectable', options.items, function(event) {
-            event.preventDefault();
+            // Prevent clicks on links
+            if( $(event.target).is('a') ) {
+                event.preventDefault();
+            }
             toggle.call(container, this, event);
         });
     }
@@ -211,15 +214,18 @@ if(jQuery) (function($) {
 
         // Fire click callback
         if( event.type === 'click' && options.click ) {
-            if( options.click.call(container, options.getValue.call(item), item) === false ) {
-                // Don't toggle if false is returned
+            if(
+                options.click.call(container, options.getValue.call(item), item, event) === false ||
+                event.isDefaultPrevented()
+            ) {
+                // Don't toggle if false is returned or default is prevented
                 return;
             }
         }
 
         // Fire doubleClick callback
         if( event.type === 'dblclick' && options.doubleClick ) {
-            options.doubleClick.call(container, options.getValue.call(item), item);
+            options.doubleClick.call(container, options.getValue.call(item), item, event);
         }
 
         // Toggle selection
