@@ -89,6 +89,8 @@ For the `click` and `doubleClick` callbacks, two arguments are available. The fi
 - `click`: runs when an item is clicked. `event.preventDefault()` or `return false` will prevent the selection from being toggled.
 - `doubleClick`: runs when an item is double clicked.
 
+**Using Anchors?** If your selectable targets are `<a>` elements, the plugin will automatically prevent clicks from hijacking the page. In this case, you'll need to `return false` instead of using `event.preventDefault()` to prevent the selection from being toggled.
+
 ### Methods
 
 Methods are called using this syntax:

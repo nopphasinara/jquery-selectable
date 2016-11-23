@@ -69,8 +69,8 @@ if(jQuery) (function($) {
         $(container)
         .data('options.selectable', options)
         .on('click.selectable dblclick.selectable', options.items, function(event) {
-            // Prevent clicks on links
-            if( $(event.target).is('a') ) {
+            // Prevent clicks on links from hijacking the page
+            if( $(event.target).parents().addBack().is('a') ) {
                 event.preventDefault();
             }
             toggle.call(container, this, event);
