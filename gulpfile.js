@@ -1,45 +1,35 @@
+/* eslint-env es6, node */
 'use strict';
 
-var gulp = require('gulp-help')(require('gulp')),
-    del = require('del'),
-    jshint = require('gulp-jshint'),
-    notify = require('gulp-notify'),
-    rename = require('gulp-rename'),
-    uglify = require('gulp-uglify');
+const
+  gulp = require('gulp-help')(require('gulp')),
+  del = require('del'),
+  notify = require('gulp-notify'),
+  rename = require('gulp-rename'),
+  uglify = require('gulp-uglify');
 
 // Clean
 gulp.task('clean', 'Clean up!', function() {
-    return del('jquery.selectable.min.js');
+  return del('jquery.selectable.min.js');
 });
 
 // Minify
-gulp.task('minify', 'Minify it!', ['jshint', 'clean'], function() {
-    return gulp.src('jquery.selectable.js')
-        .pipe(uglify({
-            preserveComments: 'license'
-        }))
-            .on('error', function(err) {
-                notify(err).write(err);
-                this.emit('end');
-            })
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest(__dirname));
-});
-
-// JSHint
-gulp.task('jshint', 'Lint it!', function() {
-    return gulp.src('jquery.selectable.js')
-        .pipe(jshint('.jshintrc'))
-        .pipe(jshint.reporter('jshint-stylish'))
-            .on('error', function(err) {
-                notify(err).write(err);
-                this.emit('end');
-            });
+gulp.task('minify', 'Minify it!', ['clean'], function() {
+  return gulp.src('jquery.selectable.js')
+    .pipe(uglify({
+      preserveComments: 'license'
+    }))
+    .on('error', function(err) {
+      notify(err).write(err);
+      this.emit('end');
+    })
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest(__dirname));
 });
 
 // Watch for changes
 gulp.task('watch', 'Watch for changes!', function() {
-    gulp.watch('jquery.selectable.js', ['minify']);
+  gulp.watch('jquery.selectable.js', ['minify']);
 });
 
 // Default
