@@ -29,7 +29,7 @@ npm install --save @claviska/jquery-selectable
 
 ## Attaching the plugin
 
-Minimal example that attached the plugin to a group of list items:
+Minimal example that attaches the plugin to a group of list items:
 
 ```html
 <ul class="my-list">
