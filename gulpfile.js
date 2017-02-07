@@ -1,26 +1,24 @@
-/* eslint-env es6, node */
+/* eslint-env node, es6 */
 'use strict';
 
-const
-  gulp = require('gulp-help')(require('gulp')),
-  del = require('del'),
-  notify = require('gulp-notify'),
-  rename = require('gulp-rename'),
-  uglify = require('gulp-uglify');
+const gulp = require('gulp-help')(require('gulp'));
+const del = require('del');
+const rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
 
 // Clean
-gulp.task('clean', 'Clean up!', function() {
+gulp.task('clean', 'Clean up!', () => {
   return del('jquery.selectable.min.js');
 });
 
 // Minify
-gulp.task('minify', 'Minify it!', ['clean'], function() {
+gulp.task('minify', 'Minify it!', ['clean'], () => {
   return gulp.src('jquery.selectable.js')
     .pipe(uglify({
       preserveComments: 'license'
     }))
-    .on('error', function(err) {
-      notify(err).write(err);
+    .on('error', (err) => {
+      console.error(err);
       this.emit('end');
     })
     .pipe(rename({ suffix: '.min' }))
@@ -28,7 +26,7 @@ gulp.task('minify', 'Minify it!', ['clean'], function() {
 });
 
 // Watch for changes
-gulp.task('watch', 'Watch for changes!', function() {
+gulp.task('watch', 'Watch for changes!', () => {
   gulp.watch('jquery.selectable.js', ['minify']);
 });
 
