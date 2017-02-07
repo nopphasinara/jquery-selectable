@@ -33,9 +33,9 @@ Minimal example that attached the plugin to a group of list items:
 
 ```html
 <ul class="my-list">
-    <li data-value="some-val-1">Item 1</li>
-    <li data-value="some-val-2">Item 2</li>
-    <li data-value="some-val-3">Item 3</li>
+  <li data-value="some-val-1">Item 1</li>
+  <li data-value="some-val-2">Item 2</li>
+  <li data-value="some-val-3">Item 3</li>
 </ul>
 ```
 
@@ -49,19 +49,19 @@ Example with all possible options:
 
 ```javascript
 $('.my-list').selectable({
-    // Options (default shown)
-    getValue: function() {
-        return $(this).attr('data-value');
-    },
-    items: 'li',
-    multiple: false,
-    disabledClass: 'disabled',
-    selectedClass: 'selected',
+  // Options (default shown)
+  getValue: function() {
+    return $(this).attr('data-value');
+  },
+  items: 'li',
+  multiple: false,
+  disabledClass: 'disabled',
+  selectedClass: 'selected',
 
-    // Callbacks
-    change: function(values, elements) { ... },
-    click: function(value, element, event) { ... },
-    doubleClick: function(value, element, event) { ...}
+  // Callbacks
+  change: function(values, elements) { ... },
+  click: function(value, element, event) { ... },
+  doubleClick: function(value, element, event) { ...}
 });
 ```
 
