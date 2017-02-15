@@ -215,8 +215,15 @@ if(jQuery) (function($) {
     var
       container = this,
       options = $(container).data('options.selectable'),
-      thisIndex = $(item).index(),
-      lastIndex = $(container).data('lastIndex.selectable');
+      items = $(container).find(options.items),
+      lastIndex = $(container).data('lastIndex.selectable'),
+      thisIndex,
+      i;
+
+    // Determine the current item's index (might not be a sibling, so we can't use `index()`)
+    for(i = 0; i < items.length; i++) {
+      if($(items).eq(i).is(item)) thisIndex = i;
+    }
 
     // Don't modify selection when disabled
     if($(container).data('disabled.selectable')) return;
