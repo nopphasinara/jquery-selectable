@@ -83,7 +83,7 @@ All callbacks are called in the context of the respective container you instanti
 
 For the `change` callback, two arguments are available. The first is an array of selected values and the second is an array containing the selected elements.
 
-For the `click` and `doubleClick` callbacks, two arguments are available. The first is the value of the target item and the second is the target element.
+For the `click` and `doubleClick` callbacks, three arguments are available. The first is the value of the target item, the second is the target element, and the third is the event.
 
 - `change`: runs when the selection changes, including when changes are made programmatically.
 - `click`: runs when an item is clicked. `event.preventDefault()` or `return false` will prevent the selection from being toggled.
