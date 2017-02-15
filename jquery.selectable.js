@@ -234,7 +234,13 @@ if(jQuery) (function($) {
 
     // Fire doubleClick callback
     if(event.type === 'dblclick' && options.doubleClick) {
-      options.doubleClick.call(container, options.getValue.call(item), item, event);
+      if(
+        options.doubleClick.call(container, options.getValue.call(item), item, event) === false ||
+        event.isDefaultPrevented()
+      ) {
+        // Don't toggle if false is returned or default is prevented
+        return;
+      }
     }
 
     // Toggle selection
