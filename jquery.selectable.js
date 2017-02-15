@@ -67,54 +67,55 @@ if(jQuery) (function($) {
     var container = this;
 
     $(container)
-    .data('options.selectable', options)
-    .on('click.selectable dblclick.selectable', options.items, function(event) {
-      // Prevent clicks on links from hijacking the page
-      if($(event.target).parents().addBack().is('a')) {
-        event.preventDefault();
-      }
-      toggle.call(container, this, event);
-    });
+      .data('options.selectable', options)
+      .on('click.selectable dblclick.selectable', options.items, function(event) {
+        // Prevent clicks on links from hijacking the page
+        if($(event.target).parents().addBack().is('a')) {
+          event.preventDefault();
+        }
+        toggle.call(container, this, event);
+      });
   }
 
   // Destroy it
   function destroy() {
     $(this)
-    .removeData('disabled.selectable')
-    .removeData('lastChange.selectable')
-    .removeData('lastIndex.selectable')
-    .removeData('options.selectable')
-    .off('click.selectable')
-    .off('dblclick.selectable');
+      .removeData('disabled.selectable')
+      .removeData('lastChange.selectable')
+      .removeData('lastIndex.selectable')
+      .removeData('options.selectable')
+      .off('click.selectable')
+      .off('dblclick.selectable');
   }
 
   // Disable it
   function disable() {
-    var
-      container = this,
-      options = $(container).data('options.selectable');
+    var container = this;
+    var options = $(container).data('options.selectable');
 
-    $(container).data('disabled.selectable', true)
-    .find(options.items).addClass(options.disabledClass);
+    $(container)
+      .data('disabled.selectable', true)
+      .find(options.items)
+      .addClass(options.disabledClass);
   }
 
   // Enable it
   function enable() {
-    var
-      container = this,
-      options = $(container).data('options.selectable');
+    var container = this;
+    var options = $(container).data('options.selectable');
 
-    $(container).removeData('disabled.selectable')
-    .find(options.items).removeClass(options.disabledClass);
+    $(container)
+      .removeData('disabled.selectable')
+      .find(options.items)
+      .removeClass(options.disabledClass);
   }
 
   // Check for changes and fire the change callback
   function fireChange() {
-    var
-      container = this,
-      options = $(container).data('options.selectable'),
-      thisChange = get.call(container),
-      lastChange = $(container).data('lastChange.selectable');
+    var container = this;
+    var options = $(container).data('options.selectable');
+    var thisChange = get.call(container);
+    var lastChange = $(container).data('lastChange.selectable');
 
     if(!lastChange || lastChange !== thisChange) {
       if(options.change) {
@@ -125,25 +126,25 @@ if(jQuery) (function($) {
 
   // Get values from the current selection
   function get() {
-    var
-      container = this,
-      options = $(container).data('options.selectable'),
-      values = [];
+    var container = this;
+    var options = $(container).data('options.selectable');
+    var values = [];
 
     // Find items that have the selection class and grab their values
-    $(container).find(options.items + '.' + options.selectedClass).each(function() {
-      values.push(options.getValue.call(this));
-    });
+    $(container)
+      .find(options.items + '.' + options.selectedClass)
+      .each(function() {
+        values.push(options.getValue.call(this));
+      });
 
     return options.multiple ? values : values[0];
   }
 
   // Return HTML elements for all items
   function getElements(which) {
-    var
-      container = this,
-      options = $(container).data('options.selectable'),
-      matching = [];
+    var container = this;
+    var options = $(container).data('options.selectable');
+    var matching = [];
 
     if(which === true) {
       // Return selected
@@ -165,14 +166,15 @@ if(jQuery) (function($) {
 
   // Select all items
   function selectAll() {
-    var
-      container = this,
-      options = $(container).data('options.selectable');
+    var container = this;
+    var options = $(container).data('options.selectable');
 
     // Don't select anything if multiple selections aren't enabled
     if(!options.multiple) return;
 
-    $(container).find(options.items).addClass(options.selectedClass);
+    $(container)
+      .find(options.items)
+      .addClass(options.selectedClass);
 
     // Fire change callback
     fireChange.call(container);
@@ -180,11 +182,12 @@ if(jQuery) (function($) {
 
   // Clear selection from all items
   function selectNone() {
-    var
-      container = this,
-      options = $(container).data('options.selectable');
+    var container = this;
+    var options = $(container).data('options.selectable');
 
-    $(container).find(options.items).removeClass(options.selectedClass);
+    $(container)
+      .find(options.items)
+      .removeClass(options.selectedClass);
 
     // Fire change callback
     fireChange.call(container);
@@ -192,9 +195,8 @@ if(jQuery) (function($) {
 
   // Set the current selection to one or more values
   function set(values) {
-    var
-      container = this,
-      options = $(container).data('options.selectable');
+    var container = this;
+    var options = $(container).data('options.selectable');
 
     if(typeof values === 'string') values = [values];
 
@@ -202,9 +204,11 @@ if(jQuery) (function($) {
     if(!options.multiple) values = [values[0]];
 
     // Find items that match the specified values and add the selection class
-    $(container).find(options.items).each(function() {
-      $(this).toggleClass(options.selectedClass, $.inArray(options.getValue.call(this), values) > -1);
-    });
+    $(container)
+      .find(options.items)
+      .each(function() {
+        $(this).toggleClass(options.selectedClass, $.inArray(options.getValue.call(this), values) > -1);
+      });
 
     // Fire change callback
     fireChange.call(container);
@@ -212,13 +216,12 @@ if(jQuery) (function($) {
 
   // Toggle selection for an item
   function toggle(item, event) {
-    var
-      container = this,
-      options = $(container).data('options.selectable'),
-      items = $(container).find(options.items),
-      lastIndex = $(container).data('lastIndex.selectable'),
-      thisIndex,
-      i;
+    var container = this;
+    var options = $(container).data('options.selectable');
+    var items = $(container).find(options.items);
+    var lastIndex = $(container).data('lastIndex.selectable');
+    var thisIndex;
+    var i;
 
     // Determine the current item's index (might not be a sibling, so we can't use `index()`)
     for(i = 0; i < items.length; i++) {
@@ -253,9 +256,10 @@ if(jQuery) (function($) {
     // Toggle selection
     if(options.multiple && event.shiftKey && lastIndex !== undefined) {
       // Select a range of items
-      $(container).find(options.items)
-      .slice(Math.min(lastIndex, thisIndex), Math.max(lastIndex, thisIndex) + 1)
-      .toggleClass(options.selectedClass, !$(item).hasClass(options.selectedClass));
+      $(container)
+        .find(options.items)
+        .slice(Math.min(lastIndex, thisIndex), Math.max(lastIndex, thisIndex) + 1)
+        .toggleClass(options.selectedClass, !$(item).hasClass(options.selectedClass));
     } else if(options.multiple && (event.metaKey || event.ctrlKey)) {
       // Select multiple items
       $(item).toggleClass(options.selectedClass);
@@ -270,7 +274,10 @@ if(jQuery) (function($) {
       }
 
       // Clear selection on all other items
-      $(container).find(options.items).not(item).removeClass(options.selectedClass);
+      $(container)
+        .find(options.items)
+        .not(item)
+        .removeClass(options.selectedClass);
     }
 
     // Fire change callback
