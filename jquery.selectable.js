@@ -5,7 +5,32 @@
 //
 // Licensed under the MIT license: http://opensource.org/licenses/MIT
 //
-if(jQuery) (function($) {
+(function(factory) {
+  if(typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['jquery'], factory);
+  } else if(typeof module === 'object' && module.exports) {
+    // Node/CommonJS
+    module.exports = function(root, jQuery) {
+      if(jQuery === undefined) {
+        // require('jQuery') returns a factory that requires window to
+        // build a jQuery instance, we normalize how we use modules
+        // that require this pattern but the window provided is a noop
+        // if it's defined (how jquery works)
+        if(typeof window !== 'undefined') {
+          jQuery = require('jquery');
+        } else {
+          jQuery = require('jquery')(root);
+        }
+      }
+      factory(jQuery);
+      return jQuery;
+    };
+  } else {
+    // Browser globals
+    factory(jQuery);
+  }
+}(function ($) {
   'use strict';
 
   // Defaults
@@ -22,45 +47,43 @@ if(jQuery) (function($) {
   };
 
   // Create the plugin
-  $.extend($.fn, {
-    selectable: function(method, options) {
-      if(typeof method === 'object') options = method;
+  $.fn.selectable = function(method, options) {
+    if(typeof method === 'object') options = method;
 
-      // Public API
-      switch(method) {
-      case 'change':
-        return $(this).each(fireChange);
+    // Public API
+    switch(method) {
+    case 'change':
+      return $(this).each(fireChange);
 
-      case 'destroy':
-        return $(this).each(destroy);
+    case 'destroy':
+      return $(this).each(destroy);
 
-      case 'disable':
-        return $(this).each(options === false ? enable : disable);
+    case 'disable':
+      return $(this).each(options === false ? enable : disable);
 
-      case 'getElements':
-        return getElements.call(this, options);
+    case 'getElements':
+      return getElements.call(this, options);
 
-      case 'selectAll':
-        return $(this).each(selectAll);
+    case 'selectAll':
+      return $(this).each(selectAll);
 
-      case 'selectNone':
-        return $(this).each(selectNone);
+    case 'selectNone':
+      return $(this).each(selectNone);
 
-      case 'value':
-        if(options === undefined) {
-          return get.call(this);
-        }
-        return $(this).each(function() {
-          set.call(this, options);
-        });
-
-      default:
-        return $(this).each(function() {
-          create.call(this, $.extend({}, $.selectable.defaults, options));
-        });
+    case 'value':
+      if(options === undefined) {
+        return get.call(this);
       }
+      return $(this).each(function() {
+        set.call(this, options);
+      });
+
+    default:
+      return $(this).each(function() {
+        create.call(this, $.extend({}, $.selectable.defaults, options));
+      });
     }
-  });
+  };
 
   // Create (initialize) it
   function create(options) {
@@ -288,4 +311,4 @@ if(jQuery) (function($) {
     .data('lastIndex.selectable', thisIndex)
     .data('lastChange.selectable', get.call(container));
   }
-})(jQuery);
+}));
