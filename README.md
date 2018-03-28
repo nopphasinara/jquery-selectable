@@ -60,8 +60,7 @@ $('.my-list').selectable({
 
   // Callbacks
   change: function(values, elements) { ... },
-  click: function(value, element, event) { ... },
-  doubleClick: function(value, element, event) { ...}
+  click: function(value, element, event) { ... }
 });
 ```
 
@@ -83,13 +82,12 @@ All callbacks are called in the context of the respective container you instanti
 
 For the `change` callback, two arguments are available. The first is an array of selected values and the second is an array containing the selected elements.
 
-For the `click` and `doubleClick` callbacks, three arguments are available. The first is the value of the target item, the second is the target element, and the third is the event.
+For the `click` callback, three arguments are available. The first is the value of the target item, the second is the target element, and the third is the event.
 
 - `change`: runs when the selection changes, including when changes are made programmatically.
-- `click`: runs when an item is clicked. `event.preventDefault()` or `return false` will prevent the selection from being toggled.
-- `doubleClick`: runs when an item is double clicked.
+- `click`: runs when an item is clicked. Returning false will prevent the selection from being toggled.
 
-**Using Anchors?** If your selectable targets are `<a>` elements, the plugin will automatically prevent clicks from hijacking the page. In this case, you'll need to `return false` instead of using `event.preventDefault()` to prevent the selection from being toggled.
+**Using Anchors?** If your selectable targets are `<a>` elements, the plugin will automatically prevent clicks from hijacking the page — there's no need to use your own `event.preventDefault()` on them.
 
 ### Methods
 
@@ -114,3 +112,9 @@ The following API methods are supported:
 - `selectNone`: clears selection from all items in the collection.
 
 - `value`: when no argument is passed, this method returns an array of values of the current selection. When a string or array is passed as an argument, this method will set the selection to any item matching the specified values.
+
+## Changelog
+
+- 2.0.0
+  - Fixed a bug where using the `click` callback would prevent selection from being toggled.
+  - Removed the `doubleClick` callback. Users who need this are encouraged to attach their own listener and use the methods above to obtain the selected values and elements.

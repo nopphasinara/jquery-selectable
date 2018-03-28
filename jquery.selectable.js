@@ -91,7 +91,7 @@
 
     $(container)
       .data('options.selectable', options)
-      .on('click.selectable dblclick.selectable', options.items, function(event) {
+      .on('click.selectable', options.items, function(event) {
         // Prevent clicks on links from hijacking the page
         if($(event.target).parents().addBack().is('a')) {
           event.preventDefault();
@@ -107,8 +107,7 @@
       .removeData('lastChange.selectable')
       .removeData('lastIndex.selectable')
       .removeData('options.selectable')
-      .off('click.selectable')
-      .off('dblclick.selectable');
+      .off('click.selectable');
   }
 
   // Disable it
@@ -255,23 +254,9 @@
     if($(container).data('disabled.selectable')) return;
 
     // Fire click callback
-    if(event.type === 'click' && options.click) {
-      if(
-        options.click.call(container, options.getValue.call(item), item, event) === false ||
-        event.isDefaultPrevented()
-      ) {
-        // Don't toggle if false is returned or default is prevented
-        return;
-      }
-    }
-
-    // Fire doubleClick callback
-    if(event.type === 'dblclick' && options.doubleClick) {
-      if(
-        options.doubleClick.call(container, options.getValue.call(item), item, event) === false ||
-        event.isDefaultPrevented()
-      ) {
-        // Don't toggle if false is returned or default is prevented
+    if(options.click) {
+      // Don't toggle if false is returned
+      if(options.click.call(container, options.getValue.call(item), item, event) === false) {
         return;
       }
     }
@@ -308,7 +293,7 @@
 
     // Remember last index and change
     $(container)
-    .data('lastIndex.selectable', thisIndex)
-    .data('lastChange.selectable', get.call(container));
+      .data('lastIndex.selectable', thisIndex)
+      .data('lastChange.selectable', get.call(container));
   }
 }));
